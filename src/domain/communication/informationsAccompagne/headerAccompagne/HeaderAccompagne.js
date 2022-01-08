@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme =>
         container: {
             height:"240px",
             width: "100%",
-            backgroundColor: "#064ee0",
+            backgroundColor: "#223f7a",
             color: "white",
             zIndex: theme.zIndex.drawer + 1,
             justifyContent: "center",
