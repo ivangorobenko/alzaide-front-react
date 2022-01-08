@@ -10,6 +10,10 @@ const useStyles = makeStyles(() =>
             padding: "0 16px 0 0",
             color: "#838383"
         },
+        message: {
+            margin: "20px",
+            backgroundColor: "#cecece",
+        }
     }));
 
 
@@ -19,18 +23,18 @@ export const Message = ({message, droitSupprimer = false, supprimerMessage}) => 
     const heureMessage = moment(message.timestamp).format('LT');
 
     return (
-        <Card>
+        <Card className={classes.message}>
             <CardContent>
                 <Typography className={classes.heureMessage} variant="h5">
                     {heureMessage}
                 </Typography>
-                <Typography variant="h3">
+                <Typography variant="h4">
                     {message.contenu}
                 </Typography>
             </CardContent>
             {droitSupprimer &&
             <CardActions>
-                <Button onClick={()=>supprimerMessage(message.id)}>Supprimer</Button>
+                <Button onClick={() => supprimerMessage(message.id)}>Supprimer</Button>
             </CardActions>
             }
         </Card>)
