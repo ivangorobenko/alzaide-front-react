@@ -14,9 +14,6 @@ const useStyles = makeStyles(() =>
             alignItems: "center",
             justifyContent: "flex-start",
         },
-        messages: {
-            marginTop: "100%"
-        },
         titreMessages: {
             color: "grey",
             padding: "16px 0 0 16px"
@@ -34,9 +31,9 @@ export const InformationsAccompagne = ({messages, getMessages}) => {
     return (
         <div className={classes.container}>
             <Header/>
-            <Grid  container direction={"row"} >
-                <Grid  item xs={6}>
-                    <div >
+            <Grid container direction={"row"} >
+                <Grid item xs={6}>
+                    <div>
                         <Typography className={classes.titreMessages} variant={"h5"}>Messages de Tatiana</Typography>
                         {
                             messages?.map(message => <Message key={message.id} message={message}/>)
