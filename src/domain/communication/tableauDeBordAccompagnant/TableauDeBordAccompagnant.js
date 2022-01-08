@@ -11,9 +11,10 @@ const useStyles = makeStyles(() =>
         messages: {
             width: "100%",
             maxHeight: "80%",
-            overflowY:"scroll"
+            overflowY: "scroll"
         },
         nouveauMessage: {
+            height: "20%",
             width: "100%",
         },
         contenu: {
@@ -27,10 +28,8 @@ export const TableauDeBordAccompagnant = ({messages, getMessages, envoyerMessage
     const [message, setMessage] = useState();
 
     useEffect(() => {
-        const interval = setInterval(() => getMessages(), 1000);
-        return () => clearInterval(interval);
+        getMessages()
     }, [getMessages]);
-
     return <Grid
         className={classes.container}
         container
@@ -40,21 +39,25 @@ export const TableauDeBordAccompagnant = ({messages, getMessages, envoyerMessage
         spacing={4}
     >
         <Grid item className={classes.messages}>
-                {messages?.map(message =>
-                    <Message droitSupprimer={true} key={message.id} message={message}
-                             supprimerMessage={supprimerMessage}/>)}
+            {messages?.map(message =>
+                <Message droitSupprimer={true} key={message.id} message={message}
+                         supprimerMessage={supprimerMessage}/>)}
         </Grid>
         <Grid item className={classes.nouveauMessage}>
             <Card elevation={0}>
                 <CardContent>
                     <TextField className={classes.contenu}
-                        multiline
+                               multiline
                                variant="filled"
-                        onChange={event => setMessage(event.target.value)}
+                               value={message}
+                               onChange={event => setMessage(event.target.value)}
                     />
                 </CardContent>
-                <CardActions>
-                    <Button variant={"contained"} size="medium" color="primary" onClick={() => envoyerMessage(message)}>
+                <CardActions className={classes.actions}>
+                    <Button variant={"contained"} size="medium" color="primary" onClick={() => {
+                        envoyerMessage(message);
+                        setMessage("");
+                    }}>
                         Envoyer
                     </Button>
                 </CardActions>

@@ -21,7 +21,7 @@ export const envoyerMessage =
     (message) =>
         (dispatch, getState, {httpClient}) => {
             httpClient.put("/message", {message}).then(() => {
-                console.log("success")
+                dispatch(getMessages());
             });
         };
 
@@ -29,7 +29,7 @@ export const supprimerMessage =
     (id) =>
         (dispatch, getState, {httpClient}) => {
             httpClient.delete("/messages/" + id).then(() => {
-                console.log("success")
+                dispatch(getMessages());
             });
         };
 
