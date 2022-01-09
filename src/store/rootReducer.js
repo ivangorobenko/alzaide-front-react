@@ -7,3 +7,4 @@ export const rootReducer = combineReducers({
 
 export const dateHeureDuMomentSelector = state => communication.dateHeureDuMomentSelector(state.communication);
 export const messagesSelector = state => communication.messagesSelector(state.communication);
+export const alerteSelector = state => communication.alerteSelector(state.communication);
