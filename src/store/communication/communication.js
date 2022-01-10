@@ -37,11 +37,37 @@ export const supprimerMessage =
 export const alerterAccompagnant =
     () =>
         (dispatch, getState, {httpClient, timer}) => {
-            const alerte = {lieu: {latitude: 1.2, longitude: 2.3}, timestamp: timer.now()};
-            httpClient.put("/alerte", {alerte}).then(() => {
-                dispatch({type: ALERTE_ACCOMPAGNANT_ENVOYEE, data: {alerte}});
-            });
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 100,
+                maximumAge: 0
+            };
+            navigator.geolocation.getCurrentPosition(pos => {
+                const lieu = {latitude: pos.coords.latitude, longitude: pos.coords.longitude}
+                envoyerAlerte(httpClient, timer, dispatch, lieu);
+            }, () => {
+                const defaultLieu = {latitude: 0, longitude: 0};
+                envoyerAlerte(httpClient, timer, dispatch, defaultLieu);
+            }, options);
         };
+
+
+const envoyerAlerte = (httpClient, timer, dispatch, lieu) => {
+    httpClient.put("/alerte", {
+        alerte: {
+            lieu,
+            timestamp: timer.now()
+        }
+    }).then(() => {
+        dispatch({
+            type: ALERTE_ACCOMPAGNANT_ENVOYEE, data: {
+                alerte: {
+                    lieu, timestamp: timer.now()
+                }
+            }
+        });
+    });
+};
 
 export const reducer = (state = {}, action) => {
     switch (action.type) {
@@ -56,6 +82,6 @@ export const reducer = (state = {}, action) => {
     }
 }
 
-export const dateHeureDuMomentSelector = state => state.time;
+export const dateHeureDuMomentSelector = state => state.dateHeureDuMoment;
 export const messagesSelector = state => state.messages;
 export const alerteSelector = state => state.alerte;
