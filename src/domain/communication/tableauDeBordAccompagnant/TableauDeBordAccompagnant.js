@@ -1,12 +1,27 @@
 import React, {useEffect, useState} from "react";
 import {Message} from "../message/Message";
-import {Button, Card, CardActions, CardContent, Grid, TextField, useTheme} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Grid,
+    TextField,
+    Typography,
+    useTheme
+} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import moment from "moment";
 
 const useStyles = makeStyles(() =>
     ({
         container: {
             height: "100%"
+        },
+        alerte: {
+            backgroundColor: "#f53838",
+            color: "white",
+            margin: "16px"
         },
         messages: {
             width: "100%",
@@ -31,6 +46,9 @@ export const TableauDeBordAccompagnant = ({
                                               supprimerMessage
                                           }) => {
     const classes = useStyles(useTheme());
+    const heureAlerte = moment(alerte?.timestamp).format("h:mm:ss");
+    const lieuAlerte = alerte?.lieu;
+    const lienLieuAlerte = `https://maps.google.com/?q=${lieuAlerte?.latitude},${lieuAlerte?.longitude}`
 
     const [message, setMessage] = useState();
 
@@ -38,7 +56,7 @@ export const TableauDeBordAccompagnant = ({
         getMessages()
         const interval = setInterval(() => recupererAlerte(), 1000);
         return () => clearInterval(interval);
-    }, [getMessages,recupererAlerte]);
+    }, [getMessages, recupererAlerte]);
 
     return <Grid
         className={classes.container}
@@ -48,6 +66,17 @@ export const TableauDeBordAccompagnant = ({
         alignItems="flex-start"
         spacing={4}
     >
+        {alerte && <Grid item>
+            <Card className={classes.alerte}>
+                <CardContent>
+                    <Typography variant={"h4"}>Attention une alerte a été envoyée à {heureAlerte}
+                        <a href={lienLieuAlerte} target="_blank" rel="noreferrer">Ici</a>
+                    </Typography>
+
+                </CardContent>
+            </Card>
+
+        </Grid>}
         <Grid item className={classes.messages}>
             {messages?.map(message =>
                 <Message droitSupprimer={true} key={message.id} message={message}
