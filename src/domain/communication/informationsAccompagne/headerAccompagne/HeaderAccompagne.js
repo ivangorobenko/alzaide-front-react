@@ -23,10 +23,10 @@ const useStyles = makeStyles(theme =>
     }));
 
 
-export const HeaderAccompagne = ({time}) => {
+export const HeaderAccompagne = ({dateHeureDuMoment}) => {
     const classes = useStyles(useTheme());
-    const dateDuMoment = moment(time).format("dddd, Do MMMM  YYYY");
-    const heureDuMoment = moment(time).format("LT");
+    const dateDuMoment = moment(dateHeureDuMoment).format("dddd, Do MMMM  YYYY");
+    const heureDuMoment = moment(dateHeureDuMoment).format("h:mm:ss");
 
     return <div className={classes.container}>
             <h2>{dateDuMoment}</h2>

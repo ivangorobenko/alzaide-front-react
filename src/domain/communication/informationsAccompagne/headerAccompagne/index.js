@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {HeaderAccompagne} from "./HeaderAccompagne";
 
 const mapStateToProps = state => ({
-    time: dateHeureDuMomentSelector(state),
+    dateHeureDuMoment: dateHeureDuMomentSelector(state),
 });
 
 const mapDispatchToProps = () => ({});
