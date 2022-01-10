@@ -1,5 +1,6 @@
 export const DATE_HEURE_DU_MOMENT_MIS_A_JOUR = 'DATE_HEURE_DU_MOMENT_MIS_A_JOUR';
 export const MESSAGES_RECUPERES = 'MESSAGES_RECUPERES';
+export const ALERTE_RECUPEREE = 'ALERTE_RECUPEREE';
 export const ALERTE_ACCOMPAGNANT_ENVOYEE = 'ALERTE_ACCOMPAGNANT_ENVOYEE';
 
 
@@ -15,6 +16,14 @@ export const getMessages =
         (dispatch, getState, {httpClient}) => {
             httpClient.get("/messages").then(messages => {
                 dispatch({type: MESSAGES_RECUPERES, data: {messages}});
+            });
+        };
+
+export const recupererAlerte =
+    () =>
+        (dispatch, getState, {httpClient}) => {
+            httpClient.get("/alerte").then((alerte) => {
+                dispatch({type: ALERTE_RECUPEREE, data: {alerte}});
             });
         };
 
@@ -76,6 +85,8 @@ export const reducer = (state = {}, action) => {
         case MESSAGES_RECUPERES:
             return {...state, messages: action.data.messages}
         case ALERTE_ACCOMPAGNANT_ENVOYEE:
+            return {...state, alerte: action.data.alerte}
+        case ALERTE_RECUPEREE:
             return {...state, alerte: action.data.alerte}
         default:
             return state

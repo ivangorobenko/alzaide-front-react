@@ -22,14 +22,24 @@ const useStyles = makeStyles(() =>
         }
     }));
 
-export const TableauDeBordAccompagnant = ({messages, getMessages, envoyerMessage, supprimerMessage}) => {
+export const TableauDeBordAccompagnant = ({
+                                              messages,
+                                              alerte,
+                                              recupererAlerte,
+                                              getMessages,
+                                              envoyerMessage,
+                                              supprimerMessage
+                                          }) => {
     const classes = useStyles(useTheme());
 
     const [message, setMessage] = useState();
 
     useEffect(() => {
         getMessages()
-    }, [getMessages]);
+        const interval = setInterval(() => recupererAlerte(), 1000);
+        return () => clearInterval(interval);
+    }, [getMessages,recupererAlerte]);
+
     return <Grid
         className={classes.container}
         container
