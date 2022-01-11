@@ -3,10 +3,12 @@ import thunk from "redux-thunk";
 import {axiosHttpClient} from "./dependencies/axiosHttpClient";
 import {nativeTimer} from "./dependencies/nativeTimer";
 import {rootReducer} from "./rootReducer";
+import {browserGeolocationService} from "./dependencies/browserGeolocationService";
 
 const initialiseDependencies = () => ({
     httpClient: axiosHttpClient,
     timer: nativeTimer,
+    geoLocationService: browserGeolocationService
 });
 export const initStore = () => {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ;

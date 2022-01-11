@@ -15,6 +15,7 @@ export const getMessages =
     () =>
         (dispatch, getState, {httpClient}) => {
             httpClient.get("/messages").then(messages => {
+                console.log("ici")
                 dispatch({type: MESSAGES_RECUPERES, data: {messages}});
             });
         };
@@ -45,19 +46,22 @@ export const supprimerMessage =
 
 export const alerterAccompagnant =
     () =>
-        (dispatch, getState, {httpClient, timer}) => {
+        (dispatch, getState, {httpClient, timer, geoLocationService}) => {
             const options = {
                 enableHighAccuracy: true,
                 timeout: 100,
                 maximumAge: 0
             };
-            navigator.geolocation.getCurrentPosition(pos => {
-                const lieu = {latitude: pos.coords.latitude, longitude: pos.coords.longitude}
-                envoyerAlerte(httpClient, timer, dispatch, lieu);
-            }, () => {
-                const defaultLieu = {latitude: 0, longitude: 0};
-                envoyerAlerte(httpClient, timer, dispatch, defaultLieu);
-            }, options);
+            const envoyerAlerteSansLieu = () => {
+                envoyerAlerte(httpClient, timer, dispatch, {latitude: 0, longitude: 0});
+            };
+            const envoyerALerteAvecLieu = pos => {
+                envoyerAlerte(httpClient, timer, dispatch, {
+                    latitude: pos.coords.latitude,
+                    longitude: pos.coords.longitude
+                });
+            };
+            geoLocationService.getGeoLocation(envoyerALerteAvecLieu, envoyerAlerteSansLieu, options);
         };
 
 
