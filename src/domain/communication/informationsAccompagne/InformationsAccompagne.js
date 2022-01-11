@@ -18,7 +18,8 @@ const useStyles = makeStyles(() =>
         zonePrincipale: {
             height: "70vh"
         },
-        informations: {height: "80%"
+        informations: {
+            height: "80%"
         },
         titreMessages: {
             color: "grey",
@@ -48,13 +49,14 @@ const useStyles = makeStyles(() =>
 
     }));
 
-export const InformationsAccompagne = ({messages, alerte, getMessages, alerterAccompagnant}) => {
+export const InformationsAccompagne = ({messages, alerte, recupererAlerte, getMessages, alerterAccompagnant}) => {
     const classes = useStyles(useTheme());
 
     useEffect(() => {
+        recupererAlerte();
         const interval = setInterval(() => getMessages(), 1000);
         return () => clearInterval(interval);
-    }, [getMessages]);
+    }, [getMessages,recupererAlerte]);
 
     return (
         <div className={classes.container}>
@@ -65,7 +67,7 @@ export const InformationsAccompagne = ({messages, alerte, getMessages, alerterAc
                   justifyContent="space-between"
                   alignItems="center">
                 <Grid container className={classes.informations} item direction={"row"}>
-                    <Grid className={classes.messages}  item xs={8}>
+                    <Grid className={classes.messages} item xs={8}>
                         <div>
                             <Typography className={classes.titreMessages} variant={"h5"}>Messages de
                                 Tatiana</Typography>
