@@ -207,6 +207,40 @@ describe('Communication reducer', function () {
         const state = store.getState();
         expect(state.communication.alerte).toEqual(alerte)
     });
+    it(`doit rendre alerte undefined dans le store si aucune alerte n'a été recupérée`, async function () {
+        //GIVEN
+        let resolveToCall = () => undefined;
+
+        const alerte = {
+            lieu: {
+                latitude: 43.5995185,
+                longitude: 1.453145
+            },
+            timestamp: 1641826935960,
+        };
+        const store = createStore(
+            rootReducer,
+            {alerte},
+            applyMiddleware(
+                thunk.withExtraArgument({
+                    httpClient: {
+                        get: () => {
+                            return new Promise((resolve) => {
+                                resolveToCall = () => resolve({});
+                            });
+                        },
+                    },
+                })
+            )
+        );
+        //WHEN
+        store.dispatch(recupererAlerte());
+        await resolveToCall();
+
+        //THEN
+        const state = store.getState();
+        expect(state.communication.alerte).toEqual(undefined)
+    });
     it(`doit pouvoir lancer une alerte à l'accompagnant et alimenter le store avec cette alerte`, async function () {
         //GIVEN
         let resolveToCall = () => undefined;

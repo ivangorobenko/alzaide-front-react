@@ -15,7 +15,6 @@ export const getMessages =
     () =>
         (dispatch, getState, {httpClient}) => {
             httpClient.get("/messages").then(messages => {
-                console.log("ici")
                 dispatch({type: MESSAGES_RECUPERES, data: {messages}});
             });
         };
@@ -24,7 +23,7 @@ export const recupererAlerte =
     () =>
         (dispatch, getState, {httpClient}) => {
             httpClient.get("/alerte").then((alerte) => {
-                dispatch({type: ALERTE_RECUPEREE, data: {alerte}});
+                dispatch({type: ALERTE_RECUPEREE, data: {alerte: Object.keys(alerte).length === 0 ? undefined: alerte}});
             });
         };
 

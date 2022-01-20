@@ -46,7 +46,7 @@ export const TableauDeBordAccompagnant = ({
                                               supprimerMessage
                                           }) => {
     const classes = useStyles(useTheme());
-    const heureAlerte = moment(alerte?.timestamp).format("h:mm:ss");
+    const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("h:mm:ss"): undefined;
     const lieuAlerte = alerte?.lieu;
     const lienLieuAlerte = `https://maps.google.com/?q=${lieuAlerte?.latitude},${lieuAlerte?.longitude}`
 
@@ -69,10 +69,7 @@ export const TableauDeBordAccompagnant = ({
         {alerte && <Grid item>
             <Card className={classes.alerte}>
                 <CardContent>
-                    <Typography variant={"h4"}>Attention une alerte a été envoyée à {heureAlerte}
-                        <a href={lienLieuAlerte} target="_blank" rel="noreferrer">Ici</a>
-                    </Typography>
-
+                    <Typography variant={"h4"}>Attention une alerte a été envoyée à {heureAlerte}</Typography>
                 </CardContent>
             </Card>
 
