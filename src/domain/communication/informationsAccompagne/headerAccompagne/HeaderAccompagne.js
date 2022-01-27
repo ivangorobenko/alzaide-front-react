@@ -34,7 +34,7 @@ export const HeaderAccompagne = ({dateHeureDuMoment}) => {
     const classes = useStyles(useTheme());
     moment.locale('fr');
     const dateDuMoment = moment(dateHeureDuMoment).format("dddd, Do MMMM  YYYY");
-    const heureDuMoment = moment(dateHeureDuMoment).format("hh:mm:ss");
+    const heureDuMoment = moment(dateHeureDuMoment).format('LTS');
 
     return <div className={classes.container}>
         <h3 className={classes.jour}>{dateDuMoment}</h3>
