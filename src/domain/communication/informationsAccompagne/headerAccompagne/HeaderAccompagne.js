@@ -5,12 +5,11 @@ import 'moment/locale/fr';
 
 import React from "react";
 
-moment.locale('fr');
 
 const useStyles = makeStyles(theme =>
     ({
         container: {
-            height:"240px",
+            height: "15vh",
             width: "100%",
             backgroundColor: "#223f7a",
             color: "white",
@@ -20,17 +19,25 @@ const useStyles = makeStyles(theme =>
             display: "flex",
             flexDirection: "column",
         },
+        jour: {
+            marginTop: "16px",
+            marginBottom: "8px"
+        },
+        heure: {
+            marginTop: "8px",
+            marginBottom: "16px"
+        }
     }));
 
 
 export const HeaderAccompagne = ({dateHeureDuMoment}) => {
     const classes = useStyles(useTheme());
+    moment.locale('fr');
     const dateDuMoment = moment(dateHeureDuMoment).format("dddd, Do MMMM  YYYY");
-    const heureDuMoment = moment(dateHeureDuMoment).format("h:mm:ss");
+    const heureDuMoment = moment(dateHeureDuMoment).format("hh:mm:ss");
 
     return <div className={classes.container}>
-            <h2>{dateDuMoment}</h2>
-            <h2>{heureDuMoment}</h2>
-    </div>
-        ;
+        <h3 className={classes.jour}>{dateDuMoment}</h3>
+        <h3 className={classes.heure}>{heureDuMoment}</h3>
+    </div>;
 };

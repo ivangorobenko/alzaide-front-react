@@ -7,11 +7,10 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles(() =>
     ({
         heureMessage: {
-            padding: "0 16px 0 0",
             color: "#838383"
         },
         message: {
-            margin: "20px",
+            margin: "16px",
             backgroundColor: "#cecece",
         }
     }));
@@ -25,10 +24,10 @@ export const Message = ({message, droitSupprimer = false, supprimerMessage}) => 
     return (
         <Card className={classes.message}>
             <CardContent>
-                <Typography className={classes.heureMessage} variant="h5">
+                <Typography className={classes.heureMessage} variant="h6">
                     {heureMessage}
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                     {message.contenu}
                 </Typography>
             </CardContent>

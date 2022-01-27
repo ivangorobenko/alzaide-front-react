@@ -13,38 +13,41 @@ const useStyles = makeStyles(() =>
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "flex-start",
+            justifyContent: "space-between",
         },
         zonePrincipale: {
-            height: "70vh"
+            height: "75vh",
+            padding: "16px"
         },
         informations: {
-            height: "80%"
+            height: "100%"
         },
         titreMessages: {
             color: "grey",
-            padding: "16px 0 0 16px"
         },
         messages: {
             height: "100%",
             overflowY: "scroll"
         },
-        buttonContainer: {
-            width: "100%",
-            padding: "16px",
-            height: "100px"
-        },
-        button: {
-            height: "100%"
-        },
         colonneDroite: {
-            justifyContent: "center",
-            textAlign: "center",
-            marginTop: "30px"
+            height: "100%",
+
         },
         placeHolder: {
             height: "100%",
             color: "grey"
+        },
+        actions: {
+            height: "10vh",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+
+            justifyContent: "center",
+        },
+        button: {
+            margin: "16px",
+            height: "50px",
         }
 
     }));
@@ -56,7 +59,7 @@ export const InformationsAccompagne = ({messages, alerte, recupererAlerte, getMe
         recupererAlerte();
         const interval = setInterval(() => getMessages(), 1000);
         return () => clearInterval(interval);
-    }, [getMessages,recupererAlerte]);
+    }, [getMessages, recupererAlerte]);
 
     return (
         <div className={classes.container}>
@@ -78,16 +81,15 @@ export const InformationsAccompagne = ({messages, alerte, recupererAlerte, getMe
                     </Grid>
                     <Grid className={classes.colonneDroite} item xs={4}>
                         <Paper className={classes.placeHolder}>Plus de fonctionnalités ici</Paper>
-
                     </Grid>
                 </Grid>
-                <Grid className={classes.buttonContainer} item>
-                    <Button className={classes.button} fullWidth={true} disabled={alerte !== undefined}
-                            variant={"contained"}
-                            color={"secondary"} size={"large"}
-                            onClick={alerterAccompagnant}>{alerte ? "Message d'urgence envoyé à " + moment(alerte.timestamp).format("LT") : "ENVOYER UN MESSAGE D'URGENCE"}</Button>
-                </Grid>
             </Grid>
+            <div className={classes.actions}>
+                <Button className={classes.button} fullWidth={true} disabled={alerte !== undefined}
+                        variant={"contained"}
+                        color={"secondary"} size={"large"}
+                        onClick={alerterAccompagnant}>{alerte ? "Message d'urgence envoyé à " + moment(alerte.timestamp).format("LT") : "ENVOYER UN MESSAGE D'URGENCE"}</Button>
+            </div>
         </div>
 
     )
