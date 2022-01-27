@@ -1,41 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Message} from "../message/Message";
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Grid,
-    TextField,
-    Typography,
-    useTheme
-} from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import moment from "moment";
+import SendIcon from '@mui/icons-material/Send';
+import {Button, Card, CardContent, Grid, TextField, Typography} from "@mui/material";
+import './TableauDeBordAccompagnant.css';
 
-const useStyles = makeStyles(() =>
-    ({
-        container: {
-            height: "100%"
-        },
-        alerte: {
-            backgroundColor: "#f53838",
-            color: "white",
-            margin: "16px"
-        },
-        messages: {
-            width: "100%",
-            maxHeight: "80%",
-            overflowY: "scroll"
-        },
-        nouveauMessage: {
-            height: "20%",
-            width: "100%",
-        },
-        contenu: {
-            width: "100%"
-        }
-    }));
 
 export const TableauDeBordAccompagnant = ({
                                               messages,
@@ -45,8 +14,7 @@ export const TableauDeBordAccompagnant = ({
                                               envoyerMessage,
                                               supprimerMessage
                                           }) => {
-    const classes = useStyles(useTheme());
-    const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("h:mm:ss"): undefined;
+    const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("h:mm:ss") : undefined;
     const lieuAlerte = alerte?.lieu;
     const lienLieuAlerte = `https://maps.google.com/?q=${lieuAlerte?.latitude},${lieuAlerte?.longitude}`
 
@@ -59,7 +27,7 @@ export const TableauDeBordAccompagnant = ({
     }, [getMessages, recupererAlerte]);
 
     return <Grid
-        className={classes.container}
+        sx={{height: "100%"}}
         container
         direction="column"
         justifyContent="space-between"
@@ -67,37 +35,35 @@ export const TableauDeBordAccompagnant = ({
         spacing={4}
     >
         {alerte && <Grid item>
-            <Card className={classes.alerte}>
+            <Card className={`alerte`}>
                 <CardContent>
                     <Typography variant={"h4"}>Attention une alerte a été envoyée à {heureAlerte}</Typography>
                 </CardContent>
             </Card>
 
         </Grid>}
-        <Grid item className={classes.messages}>
+        <Grid item className={`messages-envoyes`}>
             {messages?.map(message =>
                 <Message droitSupprimer={true} key={message.id} message={message}
                          supprimerMessage={supprimerMessage}/>)}
         </Grid>
-        <Grid item className={classes.nouveauMessage}>
-            <Card elevation={0}>
-                <CardContent>
-                    <TextField className={classes.contenu}
-                               multiline
-                               variant="filled"
-                               value={message}
-                               onChange={event => setMessage(event.target.value)}
-                    />
-                </CardContent>
-                <CardActions className={classes.actions}>
-                    <Button variant={"contained"} size="medium" color="primary" onClick={() => {
-                        envoyerMessage(message);
-                        setMessage("");
-                    }}>
-                        Envoyer
-                    </Button>
-                </CardActions>
-            </Card>
+        <Grid item className={`nouveau-message`}>
+            <div style={{display: "flex", width: "100%"}}>
+                <TextField className={`contenu`}
+                           style={{padding: "5px 5px 0 16px", height: "100%"}}
+                           multiline
+                           placeholder={"Message"}
+                           variant="filled"
+                           value={message}
+                           onChange={event => setMessage(event.target.value)}
+                />
+                <Button style={{margin: "5px 16px 0px 0px", width: "15%"}} variant="contained" endIcon={<SendIcon/>} color="primary"
+                        onClick={() => {
+                            envoyerMessage(message);
+                            setMessage("");
+                        }}>
+                </Button>
+            </div>
         </Grid>
     </Grid>
 };

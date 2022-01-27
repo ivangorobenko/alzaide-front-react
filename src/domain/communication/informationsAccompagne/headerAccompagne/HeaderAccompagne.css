@@ -1,0 +1,22 @@
+
+.header-container {
+    height: 15vh;
+    width: 100%;
+    background-color: #223f7a;
+    color: white;
+    z-index: 99;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.jour {
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.heure {
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
