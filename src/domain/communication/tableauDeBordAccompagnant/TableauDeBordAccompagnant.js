@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Message} from "../message/Message";
 import moment from "moment";
 import SendIcon from '@mui/icons-material/Send';
-import {Button, Card, CardContent, Grid, TextField, Typography} from "@mui/material";
+import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 import './TableauDeBordAccompagnant.css';
 
 
@@ -15,9 +15,9 @@ export const TableauDeBordAccompagnant = ({
                                               supprimerMessage,
                                               alerteFeatureActive
                                           }) => {
-    const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("h:mm:ss") : undefined;
-    const lieuAlerte = alerte?.lieu;
-    const lienLieuAlerte = `https://maps.google.com/?q=${lieuAlerte?.latitude},${lieuAlerte?.longitude}`
+    const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("LT") : undefined;
+    //const lieuAlerte = alerte?.lieu;
+    //const lienLieuAlerte = `https://maps.google.com/?q=${lieuAlerte?.latitude},${lieuAlerte?.longitude}`
 
     const [message, setMessage] = useState();
 
@@ -27,44 +27,33 @@ export const TableauDeBordAccompagnant = ({
         return () => clearInterval(interval);
     }, [getMessages, recupererAlerte]);
 
-    return <Grid
-        sx={{height: "100vh"}}
-        container
-        direction="column"
-        justifyContent="space-between"
-        alignItems="flex-start"
-        spacing={4}
-    >
-        {alerteFeatureActive && alerte && <Grid item>
+    return <div className={'container-accompagnant'}>
+        {alerteFeatureActive && alerte &&
             <Card className={`alerte`}>
                 <CardContent>
-                    <Typography variant={"h4"}>Attention une alerte a été envoyée à {heureAlerte}</Typography>
+                    <Typography variant={"h5"}>Attention une alerte a été envoyée à {heureAlerte} </Typography>
                 </CardContent>
             </Card>
 
-        </Grid>}
-        <Grid item className={`messages-envoyes`}>
+        }
+        <div className={`messages-envoyes`}>
             {messages?.map(message =>
                 <Message droitSupprimer={true} key={message.id} message={message}
                          supprimerMessage={supprimerMessage}/>)}
-        </Grid>
-        <Grid item className={`nouveau-message`}>
-            <div style={{display: "flex", width: "100%"}}>
-                <TextField className={`contenu-message`}
-                           style={{padding: "5px 5px 0 16px", height: "100%"}}
-                           multiline
-                           placeholder={"Message"}
-                           variant="filled"
-                           value={message}
-                           onChange={event => setMessage(event.target.value)}
-                />
-                <Button style={{margin: "5px 16px 0px 0px", width: "15%"}} variant="contained" endIcon={<SendIcon/>} color="primary"
-                        onClick={() => {
-                            envoyerMessage(message);
-                            setMessage("");
-                        }}>
-                </Button>
-            </div>
-        </Grid>
-    </Grid>
+        </div>
+        <div className={`nouveau-message`}>
+            <TextField className={`contenu-message`}
+                       multiline
+                       placeholder={"Message"}
+                       value={message}
+                       onChange={event => setMessage(event.target.value)}
+            />
+            <Button className={'envoyer-message'} variant="contained" endIcon={<SendIcon/>} color="primary"
+                    onClick={() => {
+                        envoyerMessage(message);
+                        setMessage("");
+                    }}>
+            </Button>
+        </div>
+    </div>
 };

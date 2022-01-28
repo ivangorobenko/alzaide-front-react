@@ -36,7 +36,7 @@ export const InformationsAccompagne = ({
                 </div>
                 {alerteFeatureActive && <div className={'actions-accompagne'}>
                     <Button
-                        className={`alerte`} fullWidth={true} disabled={alerte !== undefined}
+                        className={`alerte-accompagne`} fullWidth={true} disabled={alerte !== undefined}
                         variant={"contained"}
                         color={"secondary"} size={"large"}
                         onClick={alerterAccompagnant}>{alerte ? "Message d'urgence envoyé à " + moment(alerte.timestamp).format("LT") : "ENVOYER UN MESSAGE D'URGENCE"}</Button>
