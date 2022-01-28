@@ -11,6 +11,11 @@
     margin: 16px !important;
 }
 
+.aucun-message-envoye {
+    padding-top: 60%;
+    text-align: center;
+}
+
 .messages-envoyes {
     width: 100%;
     max-height: 90%;
@@ -19,7 +24,7 @@
 }
 
 .nouveau-message {
-    margin: 16px;
+    margin: 16px 16px 10%;
     display: flex;
 }
 

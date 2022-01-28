@@ -36,6 +36,9 @@ export const TableauDeBordAccompagnant = ({
             </Card>
 
         }
+            {messages?.length === 0 &&
+                <Typography className={`aucun-message-envoye`} color={"darkgrey"} variant={"h5"}>Aucun message envoyé</Typography>
+            }
         <div className={`messages-envoyes`}>
             {messages?.map(message =>
                 <Message droitSupprimer={true} key={message.id} message={message}
