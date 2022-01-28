@@ -6,11 +6,12 @@ import {
     supprimerMessage
 } from "../../../store/communication/communication";
 import {TableauDeBordAccompagnant} from "./TableauDeBordAccompagnant";
-import {alerteSelector, messagesSelector} from "../../../store/rootReducer";
+import {alerteFeatureSwitchSelector, alerteSelector, messagesSelector} from "../../../store/rootReducer";
 
 const mapStateToProps = state => ({
     messages: messagesSelector(state),
-    alerte: alerteSelector(state)
+    alerte: alerteSelector(state),
+    alerteFeatureActive: alerteFeatureSwitchSelector(state)
 });
 const mapDispatchToProps = dispatch => (
     {

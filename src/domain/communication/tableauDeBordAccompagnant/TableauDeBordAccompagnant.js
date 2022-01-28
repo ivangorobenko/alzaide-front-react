@@ -12,7 +12,8 @@ export const TableauDeBordAccompagnant = ({
                                               recupererAlerte,
                                               getMessages,
                                               envoyerMessage,
-                                              supprimerMessage
+                                              supprimerMessage,
+                                              alerteFeatureActive
                                           }) => {
     const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("h:mm:ss") : undefined;
     const lieuAlerte = alerte?.lieu;
@@ -34,7 +35,7 @@ export const TableauDeBordAccompagnant = ({
         alignItems="flex-start"
         spacing={4}
     >
-        {alerte && <Grid item>
+        {alerteFeatureActive && alerte && <Grid item>
             <Card className={`alerte`}>
                 <CardContent>
                     <Typography variant={"h4"}>Attention une alerte a été envoyée à {heureAlerte}</Typography>
