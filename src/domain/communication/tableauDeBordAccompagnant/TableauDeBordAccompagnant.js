@@ -27,7 +27,7 @@ export const TableauDeBordAccompagnant = ({
     }, [getMessages, recupererAlerte]);
 
     return <Grid
-        sx={{height: "100%"}}
+        sx={{height: "100vh"}}
         container
         direction="column"
         justifyContent="space-between"
@@ -49,7 +49,7 @@ export const TableauDeBordAccompagnant = ({
         </Grid>
         <Grid item className={`nouveau-message`}>
             <div style={{display: "flex", width: "100%"}}>
-                <TextField className={`contenu`}
+                <TextField className={`contenu-message`}
                            style={{padding: "5px 5px 0 16px", height: "100%"}}
                            multiline
                            placeholder={"Message"}
