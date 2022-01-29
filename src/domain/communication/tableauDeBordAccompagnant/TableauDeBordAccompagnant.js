@@ -4,6 +4,7 @@ import moment from "moment";
 import SendIcon from '@mui/icons-material/Send';
 import {Button, Card, CardContent, TextField, Typography} from "@mui/material";
 import './TableauDeBordAccompagnant.css';
+import styled from 'styled-components';
 
 
 export const TableauDeBordAccompagnant = ({
@@ -15,6 +16,18 @@ export const TableauDeBordAccompagnant = ({
                                               supprimerMessage,
                                               alerteFeatureActive
                                           }) => {
+
+    const MessagesEnvoyes = styled.div`
+      width: 100%;
+      max-height: 90%;
+      overflow-y: scroll;
+    `;
+
+    const AucunMessage =  styled(Typography)`
+      padding-top: 60%;
+      text-align: center;
+    `;
+
     const heureAlerte = alerte?.timestamp ? moment(alerte?.timestamp).format("LT") : undefined;
     //const lieuAlerte = alerte?.lieu;
     //const lienLieuAlerte = `https://maps.google.com/?q=${lieuAlerte?.latitude},${lieuAlerte?.longitude}`
@@ -36,14 +49,15 @@ export const TableauDeBordAccompagnant = ({
             </Card>
 
         }
-            {messages?.length === 0 &&
-                <Typography className={`aucun-message-envoye`} color={"darkgrey"} variant={"h5"}>Aucun message envoyé</Typography>
-            }
-        <div className={`messages-envoyes`}>
+        {messages?.length === 0 &&
+            <AucunMessage color={"darkgrey"} variant={"h5"}>Aucun message
+                envoyé</AucunMessage>
+        }
+        <MessagesEnvoyes>
             {messages?.map(message =>
                 <Message droitSupprimer={true} key={message.id} message={message}
                          supprimerMessage={supprimerMessage}/>)}
-        </div>
+        </MessagesEnvoyes>
         <div className={`nouveau-message`}>
             <TextField className={`contenu-message`}
                        multiline
