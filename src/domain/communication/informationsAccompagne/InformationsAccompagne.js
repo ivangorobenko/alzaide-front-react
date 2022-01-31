@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Message} from "../message/Message";
 import Header from "./headerAccompagne";
 import moment from "moment";
-import {Button, Typography} from "@mui/material";
+import {Button, Divider, Typography} from "@mui/material";
 import './InformationsAccompagne.css';
 import {TacheQuotidienneRecevoirJournal} from "./TacheQuotidienne";
 
@@ -44,19 +44,23 @@ export const InformationsAccompagne = ({
                         <Typography className={`titre-messages`} variant={"h5"}>Messages de
                             Tatiana</Typography>
                         {messages?.length === 0 &&
-                            <Typography className={`aucun-message`} color={"darkgrey"} variant={"h4"}>Aucun message
-                                reçu</Typography>
+                            <div style={{marginTop:"10%"}}>
+                                <Typography className={`aucun-message`} color={"darkgrey"} variant={"h4"}>
+                                    Aucun message reçu
+                                </Typography>
+                            </div>
                         }
                         {
                             messages?.map(message => <Message key={message.id} message={message}/>)
                         }
                     </div>
+                    <Divider sx={{marginTop:"16px"}} orientation="vertical" flexItem />
                     <div style={{
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-between",
-                        margin: "56px"
+                        margin: "56px 16px 0 16px"
                     }}>
                         {tachesQuotidiennes?.map(tache => {
                             return tache.type === "RECEVOIR_JOURNAL" ? <TacheQuotidienneRecevoirJournal
