@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
-import {Message} from "../message/Message";
 import Header from "./headerAccompagne";
 import moment from "moment";
-import {Button, Divider, Typography} from "@mui/material";
+import {Button, Divider} from "@mui/material";
 import './InformationsAccompagne.css';
-import {TacheQuotidienneRecevoirJournal} from "./TacheQuotidienne";
+import {Messages} from "./Messages";
+import {TachesQuotidiennes} from "./TachesQuotidiennes";
+import styled from "styled-components";
 
 export const InformationsAccompagne = ({
                                            messages,
@@ -30,47 +31,23 @@ export const InformationsAccompagne = ({
         };
     }, [getMessages, recupererAlerte, recupererTachesQuotidiennes]);
 
+    const MainContent = styled.div`
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    `;
+
     return (
         <div className={`container`}>
             <Header/>
             <div className={`zone-principale`}>
-                <div style={{
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row"
-                }}>
-                    <div className={'messages'}>
-                        <Typography className={`titre-messages`} variant={"h5"}>Messages de
-                            Tatiana</Typography>
-                        {messages?.length === 0 &&
-                            <div style={{marginTop:"10%"}}>
-                                <Typography className={`aucun-message`} color={"darkgrey"} variant={"h4"}>
-                                    Aucun message reçu
-                                </Typography>
-                            </div>
-                        }
-                        {
-                            messages?.map(message => <Message key={message.id} message={message}/>)
-                        }
-                    </div>
-                    <Divider sx={{marginTop:"16px"}} orientation="vertical" flexItem />
-                    <div style={{
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        margin: "56px 16px 0 16px"
-                    }}>
-                        {tachesQuotidiennes?.map(tache => {
-                            return tache.type === "RECEVOIR_JOURNAL" ? <TacheQuotidienneRecevoirJournal
-                                    key={tache.type} tache={tache}
-                                    validerTache={validerTacheQuotidienne}/>
-                                : <></>
-                        })
-                        }
-                    </div>
-                </div>
+                <MainContent>
+                    <Messages messages={messages}/>
+                    <Divider sx={{marginTop: "16px"}} orientation="vertical" flexItem/>
+                    <TachesQuotidiennes tachesQuotidiennes={tachesQuotidiennes}
+                                        validerTacheQuotidienne={validerTacheQuotidienne}/>
+                </MainContent>
                 {alerteFeatureActive && <div className={'actions-accompagne'}>
                     <Button
                         className={`alerte-accompagne`} fullWidth={true} disabled={alerte !== undefined}
