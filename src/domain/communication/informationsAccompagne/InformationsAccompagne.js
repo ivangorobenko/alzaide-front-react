@@ -4,35 +4,68 @@ import Header from "./headerAccompagne";
 import moment from "moment";
 import {Button, Typography} from "@mui/material";
 import './InformationsAccompagne.css';
+import {TacheQuotidienneRecevoirJournal} from "./TacheQuotidienne";
 
 export const InformationsAccompagne = ({
                                            messages,
                                            alerte,
+                                           tachesQuotidiennes,
                                            recupererAlerte,
                                            getMessages,
                                            alerterAccompagnant,
-                                           alerteFeatureActive
+                                           alerteFeatureActive,
+                                           recupererTachesQuotidiennes,
+                                           validerTacheQuotidienne
                                        }) => {
 
     useEffect(() => {
+        const heure = 1000 * 60 * 60;
         recupererAlerte();
-        const interval = setInterval(() => getMessages(), 1000);
-        return () => clearInterval(interval);
-    }, [getMessages, recupererAlerte]);
+        recupererTachesQuotidiennes()
+        const intervalMessages = setInterval(() => getMessages(), 1000);
+        const intervalTaches = setInterval(() => recupererTachesQuotidiennes(), heure);
+        return () => {
+            clearInterval(intervalMessages);
+            clearInterval(intervalTaches);
+        };
+    }, [getMessages, recupererAlerte, recupererTachesQuotidiennes]);
 
     return (
         <div className={`container`}>
             <Header/>
             <div className={`zone-principale`}>
-                <div className={'messages'}>
-                    <Typography className={`titre-messages`} variant={"h5"}>Messages de
-                        Tatiana</Typography>
-                    {messages?.length === 0 &&
-                        <Typography className={`aucun-message`} color={"darkgrey"} variant={"h4"}>Aucun message reçu</Typography>
-                    }
-                    {
-                        messages?.map(message => <Message key={message.id} message={message}/>)
-                    }
+                <div style={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
+                    <div className={'messages'}>
+                        <Typography className={`titre-messages`} variant={"h5"}>Messages de
+                            Tatiana</Typography>
+                        {messages?.length === 0 &&
+                            <Typography className={`aucun-message`} color={"darkgrey"} variant={"h4"}>Aucun message
+                                reçu</Typography>
+                        }
+                        {
+                            messages?.map(message => <Message key={message.id} message={message}/>)
+                        }
+                    </div>
+                    <div style={{
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        margin: "56px"
+                    }}>
+                        {tachesQuotidiennes?.map(tache => {
+                            return tache.type === "RECEVOIR_JOURNAL" ? <TacheQuotidienneRecevoirJournal
+                                    key={tache.type} tache={tache}
+                                    validerTache={validerTacheQuotidienne}/>
+                                : <></>
+                        })
+                        }
+                    </div>
                 </div>
                 {alerteFeatureActive && <div className={'actions-accompagne'}>
                     <Button

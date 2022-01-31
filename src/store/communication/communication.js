@@ -2,7 +2,7 @@ export const DATE_HEURE_DU_MOMENT_MIS_A_JOUR = 'DATE_HEURE_DU_MOMENT_MIS_A_JOUR'
 export const MESSAGES_RECUPERES = 'MESSAGES_RECUPERES';
 export const ALERTE_RECUPEREE = 'ALERTE_RECUPEREE';
 export const ALERTE_ACCOMPAGNANT_ENVOYEE = 'ALERTE_ACCOMPAGNANT_ENVOYEE';
-
+export const TACHES_QUOTIDIENNES_RECUPEREES = 'TACHES_QUOTIDIENNES_RECUPEREES';
 
 export const mettreAJourDateHeureDuMoment =
     () =>
@@ -23,7 +23,29 @@ export const recupererAlerte =
     () =>
         (dispatch, getState, {httpClient}) => {
             httpClient.get("/alerte").then((alerte) => {
-                dispatch({type: ALERTE_RECUPEREE, data: {alerte: Object.keys(alerte).length === 0 ? undefined: alerte}});
+                dispatch({
+                    type: ALERTE_RECUPEREE,
+                    data: {alerte: Object.keys(alerte).length === 0 ? undefined : alerte}
+                });
+            });
+        };
+
+export const recupererTachesQuotidiennes =
+    () =>
+        (dispatch, getState, {httpClient}) => {
+            httpClient.get("/tache-quotidienne").then((tachesQuotidiennes) => {
+                dispatch({
+                    type: TACHES_QUOTIDIENNES_RECUPEREES,
+                    data: {tachesQuotidiennes: Object.keys(tachesQuotidiennes).length === 0 ? undefined : tachesQuotidiennes}
+                });
+            });
+        };
+
+export const validerTacheQuotidienne =
+    (tache) =>
+        (dispatch, getState, {httpClient}) => {
+            httpClient.post("/tache-quotidienne", {typeTache: tache.type}).then(() => {
+                dispatch(recupererTachesQuotidiennes())
             });
         };
 
@@ -91,6 +113,8 @@ export const reducer = (state = {}, action) => {
             return {...state, alerte: action.data.alerte}
         case ALERTE_RECUPEREE:
             return {...state, alerte: action.data.alerte}
+        case TACHES_QUOTIDIENNES_RECUPEREES:
+            return {...state, tachesQuotidiennes: action.data.tachesQuotidiennes}
         default:
             return state
     }
@@ -99,3 +123,4 @@ export const reducer = (state = {}, action) => {
 export const dateHeureDuMomentSelector = state => state.dateHeureDuMoment;
 export const messagesSelector = state => state.messages;
 export const alerteSelector = state => state.alerte;
+export const tachesQuotidiennesSelector = state => state.tachesQuotidiennes;

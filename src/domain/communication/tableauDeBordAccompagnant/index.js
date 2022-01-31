@@ -6,7 +6,11 @@ import {
     supprimerMessage
 } from "../../../store/communication/communication";
 import {TableauDeBordAccompagnant} from "./TableauDeBordAccompagnant";
-import {alerteFeatureSwitchSelector, alerteSelector, messagesSelector} from "../../../store/rootReducer";
+import {
+    alerteFeatureSwitchSelector,
+    alerteSelector,
+    messagesSelector,
+} from "../../../store/rootReducer";
 
 const mapStateToProps = state => ({
     messages: messagesSelector(state),
@@ -18,7 +22,7 @@ const mapDispatchToProps = dispatch => (
         getMessages: () => dispatch(getMessages()),
         recupererAlerte: () => dispatch(recupererAlerte()),
         envoyerMessage: message => dispatch(envoyerMessage(message)),
-        supprimerMessage: id =>dispatch(supprimerMessage(id))
+        supprimerMessage: id => dispatch(supprimerMessage(id)),
     });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableauDeBordAccompagnant);
